@@ -1,7 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Outfit:wght@100..900&family=Poppins:wght@300&family=Roboto:ital,wght@0,100..900;1,100..900&family=Ubuntu:wght@300&display=swap');
+
 @import "tailwindcss";
+
+* {
+  font-family: Outfit;
+}
 
 @theme {
   --color-primary: #5f6fff;
+}
+
+/* Hide scrollbar */
+html,
+body {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  overflow-y: scroll;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
 }
 
 .active {
