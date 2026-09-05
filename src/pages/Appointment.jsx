@@ -5,6 +5,7 @@ import { assets } from "../../assets/assets_frontend/assets"
 import RelatedDoctors from "../components/RelatedDoctors"
 
 const Appointment = () => {
+
   const { docId } = useParams()
   const { doctors, currencySymbol } = useContext(AppContext)
   const daysOfWeek = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
@@ -42,9 +43,7 @@ const Appointment = () => {
       // Setting Hours
 
       if (today.getDate() === currentDate.getDate()) {
-        currentDate.setHours(
-          currentDate.getHours() > 10 ? currentDate.getHours() + 1 : 10,
-        )
+        currentDate.setHours( currentDate.getHours() > 10 ? currentDate.getHours() + 1 : 10 )
         currentDate.setMinutes(currentDate.getMinutes() > 30 ? 30 : 0)
       } else {
         currentDate.setHours(10)
@@ -54,17 +53,11 @@ const Appointment = () => {
       let timeSlots = []
 
       while (currentDate < endTime) {
-        let formattedTime = currentDate.toLocaleTimeString([], {
-          hour: "2-digit",
-          minute: "2-digit",
-        })
+        let formattedTime = currentDate.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit"})
 
         // Add Slot to Array
 
-        timeSlots.push({
-          dateTime: new Date(currentDate),
-          time: formattedTime,
-        })
+        timeSlots.push({dateTime: new Date(currentDate), time: formattedTime})
 
         // Increment current time by 30 minutes
 
@@ -89,19 +82,14 @@ const Appointment = () => {
 
   return (
     docInfo && (
+
       <div>
 
         {/* --- Doctor Details --- */}
 
         <div className="flex flex-col sm:flex-row gap-4">
 
-          <div>
-            <img
-              className="bg-primary w-full sm:max-w-72 rounded-lg"
-              src={docInfo.image}
-              alt=""
-            />
-          </div>
+          <div> <img className="bg-primary w-full sm:max-w-72 rounded-lg" src={docInfo.image} alt="" /> </div>
 
           <div className="flex-1 border border-gray-400 rounded-lg p-8 py-7 bg-white mx-2 sm:mx-0 mt-[-80px] sm:mt-0">
 
@@ -154,16 +142,15 @@ const Appointment = () => {
 
           {/* --- Days --- */}
 
-          <div className="flex gap-2 items-center w-full overflow-x-auto mt-4 pb-1 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+          <div className="flex gap-3 items-center w-full overflow-x-auto mt-4 pb-1 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
 
             {
               docSlots.length && docSlots.map((item, index) => (
-                <div
-                  onClick={() => {
+                <div onClick={() => {
                     setSlotIndex(index)
                     setSlotTime("")
                   }}
-                  className={`text-center py-3 min-w-[58px] rounded-full cursor-pointer border transition-all ${
+                  className={`text-center py-3 min-w-[54px] h-[80px] rounded-[30px] cursor-pointer border transition-all flex flex-col justify-center ${
                     slotIndex === index
                       ? "bg-primary text-white border-primary shadow-md"
                       : "border-gray-200 text-gray-600"
@@ -171,11 +158,11 @@ const Appointment = () => {
                   key={index}
                 >
 
-                  <p className="text-xs">
+                  <p className="text-sm font-medium">
                     {item[0] && daysOfWeek[item[0].dateTime.getDay()]}
                   </p>
 
-                  <p className="text-sm mt-1">
+                  <p className="text-base font-medium mt-1">
                     {item[0] && item[0].dateTime.getDate()}
                   </p>
 
@@ -191,8 +178,7 @@ const Appointment = () => {
 
             {
               docSlots.length && docSlots[slotIndex].map((item, index) => (
-                <p
-                  onClick={() => setSlotTime(item.time)}
+                <p onClick={() => setSlotTime(item.time)}
                   className={`text-xs font-light flex-shrink-0 px-5 py-2 rounded-full cursor-pointer border transition-all ${
                     item.time === slotTime
                       ? "bg-primary text-white border-primary"
@@ -209,16 +195,13 @@ const Appointment = () => {
 
           {/* --- Book Appointment Button --- */}
 
-          <button className="bg-primary text-white text-sm font-light px-14 py-3 rounded-full my-6 shadow-md">
-            Book an appointment
-          </button>
+          <button className="bg-primary text-white text-sm font-light px-14 py-3 rounded-full my-6 shadow-md">Book an appointment</button>
 
         </div>
 
         {/* --- Listing Related Doctors --- */}
 
         <RelatedDoctors docId={docId} speciality={docInfo.speciality} />
-
 
       </div>
     )

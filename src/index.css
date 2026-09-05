@@ -35,3 +35,9 @@ body::-webkit-scrollbar {
 .active li {
   color: #5f6fff !important;
 }
+
+@medias (max-width: 740px) {
+  .active p {
+    @apply text-white bg-primary
+  }
+}
