@@ -18,7 +18,7 @@ import razorpay_logo from "./razorpay_logo.png";
 import doc1 from "./doc1.png";
 import doc2 from "./doc2.png";
 import doc3 from "./doc3.png";
-import doc4 from "./Doc4.png";
+import doc4 from "./doc4.png";
 import doc5 from "./doc5.png";
 import doc6 from "./doc6.png";
 import doc7 from "./doc7.png";
