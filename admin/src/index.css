@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #5f6fff;
+  --color-ink: #172033;
+}
+
+:root {
+  font-family: Arial, sans-serif;
+  color: #5e5e5e;
+  background: #ffffff;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0
+}
+
+button,
+input {
+  font: inherit;
+}
