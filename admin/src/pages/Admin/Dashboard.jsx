@@ -7,9 +7,9 @@ import { AppContext } from "../../context/AppContext"
 
 const Dashboard = () => {
 
-  const {aToken, getDashData, cancelAppointment, dashData} = useContext(AdminContext)
+  const {aToken, dashData, getDashData, cancelAppointment} = useContext(AdminContext)
 
-  const {slotDateFormat} = useContext(AppContext)
+  const {slotDateFormat, currency} = useContext(AppContext)
 
   useEffect(() => {
     if (aToken) {
@@ -61,19 +61,26 @@ const Dashboard = () => {
           <div className="py-0.5">
 
             {
-
               dashData.latestAppointments.map((item,index) => (
+
                 <div className="flex items-center gap-3 px-5 py-2.5 hover:bg-gray-100" key={index}>
+
                   <img className="w-8 rounded-full" src={item.docData.image} alt=""/>
+
                   <div className="flex-1 text-sm">
-                    <p className="text-gray-800 font-medium">{item.docData.name}</p>
-                    <p className="text-gray-600 text-xs">Booking on {slotDateFormat(item.slotDate)}</p>
+
+                    <p className="text-gray-800 font-medium">{item.docData.name} </p>
+
+                    <p className="text-gray-600 text-xs">Booking on {slotDateFormat(item.slotDate)} </p>
+
                   </div>
 
                   {
-                    item.cancelled
-                    ? <p className="text-red-400 text-xs font-medium">Cancelled</p>
-                    : <img onClick={() => cancelAppointment(item._id)} className="w-6 cursor-pointer" src={assets.cancel_icon} alt="Cancel appointment" />
+                    item.cancelled 
+                      ? <p className="text-red-500 text-xs font-medium">Cancelled</p>
+                      : item.isCompleted
+                        ? <p className="text-green-500 text-xs font-medium">Completed</p>
+                        : <img onClick={() => cancelAppointment(item._id)} className="w-8 cursor-pointer" src={assets.cancel_icon} alt="Cancel appointment" />
                   }
 
                 </div>
@@ -86,8 +93,11 @@ const Dashboard = () => {
         </div>
 
       </div>
+
     )
+
   )
+
 }
 
 export default Dashboard

@@ -1,4 +1,6 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect } from "react"
+import axios from "axios"
+import { toast } from "react-toastify"
 
 export const DoctorContext = createContext()
 
@@ -7,19 +9,147 @@ const DoctorContextProvider = (props) => {
     const backendUrl = import.meta.env.VITE_BACKEND_URL
 
     const [dToken, setDToken] = useState(localStorage.getItem("dToken") || null)
+    const [appointments, setAppointments] = useState([])
+    const [dashData, setDashData] = useState(false)
+    const [profileData, setProfileData] = useState(false)
 
     useEffect(() => {
+
         if (dToken) {
+
             localStorage.setItem("dToken", dToken)
+
         } else {
+
             localStorage.removeItem("dToken")
         }
+
     }, [dToken])
+
+    const getAppointments = async () => {
+
+        try {
+
+            const {data} = await axios.get(backendUrl + "/api/doctors/appointments", {headers: {dToken}})
+
+            if (data.success) {
+                setAppointments(data.appointments)
+                console.log(data.appointments) 
+            } else {
+                toast.error(data.message)
+                if (data.message?.toLowerCase().includes('authorized')) {
+                    setDToken(null)
+                }
+            }
+
+        } catch (error) {
+            console.log(error)
+            console.error(error.message)
+            if (error.response?.status === 401) {
+                setDToken(null)
+            }
+        }
+    }
+
+    const completeAppointment = async (appointmentId) => {
+
+        try {
+
+            const {data} = await axios.post(backendUrl + '/api/doctors/complete-appointment', {appointmentId}, {headers: {dToken}})
+
+            if (data.success) {
+                toast.success(data.message)
+                getAppointments()
+            } else {
+                toast.error(data.message)
+            }
+
+        } catch (error) {
+            console.log(error)
+            toast.error(error.message)
+        }
+
+    }
+
+    const cancelAppointment = async (appointmentId) => {
+
+        try {
+
+            const {data} = await axios.post(backendUrl + '/api/doctors/cancel-appointment', {appointmentId}, {headers: {dToken}})
+
+            if (data.success) {
+                toast.error(data.message)
+                getAppointments()
+            } else {
+                toast.error(data.message)
+            }
+
+        } catch (error) {
+            console.log(error)
+            toast.error(error.message)
+        }
+
+    }
+
+    const getDashData = async () => {
+
+        try {
+
+            const {data} = await axios.get(backendUrl + '/api/doctors/dashboard', {headers: {dToken}})
+
+            if (data.success) {
+                setDashData(data.dashData)
+                console.log(data.dashData)
+            } else {
+                toast.error(data.message)
+                if (data.message?.toLowerCase().includes('authorized')) {
+                    setDToken(null)
+                }
+            }
+
+        } catch (error) {
+            console.log(error)
+            toast.error(error.message)
+            if (error.response?.status === 401) {
+                setDToken(null)
+            }
+        }
+
+    }
+
+    const getProfileData = async () => {
+
+        try {
+
+            const {data} = await axios.get(backendUrl + '/api/doctors/profile',{headers:{dToken}})
+
+            if (data.success) {
+            setProfileData(data.profileData)
+            console.log(data.profileData)
+            }
+
+        } catch (error) {
+            console.log(error)
+            toast.error(error.message)
+        }
+
+    }
 
     const value = {
         dToken,
         setDToken,
         backendUrl,
+        appointments,
+        setAppointments,
+        getAppointments,
+        completeAppointment,
+        cancelAppointment,
+        dashData,
+        setDashData,
+        getDashData,
+        profileData,
+        setProfileData,
+        getProfileData
     }
 
     return (

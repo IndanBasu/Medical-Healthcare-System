@@ -37,9 +37,11 @@ const Login = () => {
     try {
 
       if (state === "Admin") {
+
         const { data } = await axios.post(backendUrl + "/api/admin/login", {email, password })
 
         if (data.success) {
+
           console.log("LOGIN SUCCESS")
           console.log("TOKEN:", data.token)
 
@@ -47,21 +49,37 @@ const Login = () => {
           console.log("STORED TOKEN:", localStorage.getItem("aToken"))
 
           setAToken(data.token)
+          
         } else {
+
           toast.error(data.message)
+          
         }
       } else {
+
         const { data } = await axios.post(backendUrl + "/api/doctors/login", {email, password})
 
         if (data.success) {
+
+          setAToken(null)
+
+          localStorage.removeItem("aToken")
           localStorage.setItem("dToken", data.token)
+
           setDToken(data.token)
+
+          navigate("/doctor-dashboard")
+
           console.log(data.token)
+
         } else {
+
           toast.error(data.message)
+
         }
       }
     } catch (error) {
+
       console.log(error)
       toast.error(error.message)
     }
@@ -83,7 +101,7 @@ const Login = () => {
           <p>Password</p>
           <input onChange={(e) => setPassword(e.target.value)} value={password} className="border border-[#DADADA] rounded w-full p-2 mt-1" type="password" required />
         </div>
-        <button className="bg-primary text-white w-full py-2 rounded-md text-base">Login</button>
+        <button type="submit" className="bg-primary text-white w-full py-2 rounded-md text-base">Login</button>
         {state === "Admin" ? (
           <p>Doctor Login?{" "}
             <span className="text-primary cursor-pointer" onClick={() => setState("Doctor")}>Click here</span>

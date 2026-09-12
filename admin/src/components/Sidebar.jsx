@@ -6,8 +6,8 @@ import { DoctorContext } from "../context/DoctorContext"
 
 const Sidebar = () => {
 
-  const { aToken } = useContext(AdminContext);
-  const { dToken } = useContext(DoctorContext);
+  const { aToken } = useContext(AdminContext)
+  const { dToken } = useContext(DoctorContext)
 
   return (
 
@@ -40,7 +40,7 @@ const Sidebar = () => {
             </NavLink>
 
             <NavLink className={({ isActive }) => `flex items-center gap-2.5 py-2.5 px-5 cursor-pointer text-[10px] ${isActive ? "bg-[#F2F3FF] border-r-4 border-primary" : ""}`} to={"/patients"}>
-              <img className="h-3.5 w-3.5" src={assets.patients_icon} alt="" />
+              <img className="h-3.5 w-3.5" src={assets.patient_icon} alt="" />
               <p>Patients</p>
             </NavLink>
 
@@ -56,7 +56,7 @@ const Sidebar = () => {
 
             <NavLink className={({ isActive }) => `flex items-center gap-2.5 py-2.5 px-5 cursor-pointer text-[10px] ${isActive ? "bg-[#F2F3FF] border-r-4 border-primary" : ""}`} to={"/doctor-dashboard"}>
               <img className="h-3.5 w-3.5" src={assets.home_icon} alt="" />
-              <p>Home</p>
+              <p className="hidden md:block">Dashboard</p>
             </NavLink>
 
             <NavLink className={({ isActive }) => `flex items-center gap-2.5 py-2.5 px-5 cursor-pointer text-[10px] ${isActive ? "bg-[#F2F3FF] border-r-4 border-primary" : ""}`} to={"/doctor-appointments"}>
@@ -70,7 +70,7 @@ const Sidebar = () => {
             </NavLink>
 
             <NavLink className={({ isActive }) => `flex items-center gap-2.5 py-2.5 px-5 cursor-pointer text-[10px] ${isActive ? "bg-[#F2F3FF] border-r-4 border-primary" : ""}`} to={"/patients"}>
-              <img className="h-3.5 w-3.5" src={assets.patients_icon} alt="" />
+              <img className="h-3.5 w-3.5" src={assets.patient_icon} alt="" />
               <p>Patients</p>
             </NavLink>
 
